@@ -13,24 +13,27 @@ function fetchData(url) {
 }
 
 function generateHTML(data) {
-  console.log(data)
+  console.log(data.length)
   console.log(data[0].name)
   const gallery = document.getElementById("gallery")
   const employeeCard = document.createElement("div")
-  let html = `<div class="card">
+  // loop through the data set, 12 results
+  for (let i = 0; i < data.length; i++) {
+    let html = `<div class="card">
   <div class="card-img-container">
-      <img class="card-img" src="${data[0].picture.thumbnail}" alt="profile picture">
+      <img class="card-img" src="${data[i].picture.thumbnail}" alt="profile picture">
   </div>
   <div class="card-info-container">
-      <h3 id="name" class="card-name cap">${data[0].name.first} ${data[0].name.last}</h3>
-      <p class="card-text">email</p>
-      <p class="card-text cap">city, state</p>
+      <h3 id="name" class="card-name cap">${data[i].name.first} ${data[i].name.last}</h3>
+      <p class="card-text">${data[i].email}</p>
+      <p class="card-text cap">${data[i].location.city}, ${data[i].location.state}</p>
   </div>
 </div>`
 
-  // employeeCard.innerHTML += html
-  //gallery.appendChild(employeeCard)
-  gallery.insertAdjacentHTML("beforeend", html)
+    // employeeCard.innerHTML += html
+    //gallery.appendChild(employeeCard)
+    gallery.insertAdjacentHTML("beforeend", html)
+  }
 }
 /**
  * element.insertAdjacentHTML('beforeend', 'HTML string')
