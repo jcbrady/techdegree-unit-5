@@ -46,9 +46,9 @@ function generateHTML(data) {
 
 function generateMODAL(data) {
   console.log(data);
-
-  let html;
-  return (html += `
+  //console.log(data.length);
+  //for (let i = 0; i < data.length; i++) {
+  let html = `
   <div class="modal-container">
   <div class="modal">
       <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
@@ -63,18 +63,20 @@ function generateMODAL(data) {
           <p class="modal-text">Birthday: 10/21/2015</p>
       </div>
   </div>
-  `);
+  `;
+  //}
+  return html;
 }
 
 function toggleMODAL() {
   const modalSelector = document.querySelector("body");
-  // console.log("clicked");
   const modalHTML = generateMODAL();
   modalSelector.insertAdjacentHTML("beforeend", modalHTML);
   const close = document.getElementById("modal-close-btn");
   // console.log(close);
-  close.addEventListener("click", function () {
+  close.addEventListener("click", function (e) {
     console.log("clicked modal close");
+    console.log(e.target);
   });
 }
 
