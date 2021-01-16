@@ -7,9 +7,12 @@ fetchData("https://randomuser.me/api/?results=12");
 
 function fetchData(url) {
   return fetch(url)
-    .then(response => response.json())
-    .then(data => generateHTML(data.results))
-    .then(data => generateMODAL(data.results))
+    .then(response => response.json()) // returns a promise
+    .then(data => {
+      generateHTML(data.results);
+      generateMODAL(data.results);
+    }) // calls functions with the data results
+
     .catch(error => console.log("Looks like there was a problem", error));
 }
 
@@ -18,7 +21,7 @@ function generateHTML(data) {
   //console.log(data[0].name) //test data results
 
   const gallery = document.getElementById("gallery");
-  const employeeCard = document.createElement("div");
+  //const employeeCard = document.createElement("div");
 
   // loop through the data set, 12 results
   for (let i = 0; i < data.length; i++) {
@@ -37,13 +40,42 @@ function generateHTML(data) {
 
     // Get the HTML elements for the Modal window and listen for clicks
     const card = document.querySelectorAll(".card")[i];
-    card.addEventListener("click", generateMODAL);
+    card.addEventListener("click", toggleMODAL);
   } // end loop
 }
 
-function generateMODAL(e, data) {
-  console.log(e.target);
+function generateMODAL(data) {
   console.log(data);
+
+  let html;
+  return (html += `
+  <div class="modal-container">
+  <div class="modal">
+      <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
+      <div class="modal-info-container">
+          <img class="modal-img" src="https://placehold.it/125x125" alt="profile picture">
+          <h3 id="name" class="modal-name cap">name</h3>
+          <p class="modal-text">email</p>
+          <p class="modal-text cap">city</p>
+          <hr>
+          <p class="modal-text">(555) 555-5555</p>
+          <p class="modal-text">123 Portland Ave., Portland, OR 97204</p>
+          <p class="modal-text">Birthday: 10/21/2015</p>
+      </div>
+  </div>
+  `);
+}
+
+function toggleMODAL() {
+  const modalSelector = document.querySelector("body");
+  // console.log("clicked");
+  const modalHTML = generateMODAL();
+  modalSelector.insertAdjacentHTML("beforeend", modalHTML);
+  const close = document.getElementById("modal-close-btn");
+  // console.log(close);
+  close.addEventListener("click", function () {
+    console.log("clicked modal close");
+  });
 }
 
 /**
