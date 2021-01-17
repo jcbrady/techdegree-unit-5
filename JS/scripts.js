@@ -41,12 +41,15 @@ function generateHTML(data) {
     const card = document.querySelectorAll(".card")[i];
     card.addEventListener("click", toggleMODAL);
   } // end loop
+  //generate the modal html
+  generateMODAL(data);
 }
 
-function generateMODAL() {
-  const data = fetchData("https://randomuser.me/api/?results=12");
-  console.log(data);
-  data.then(response => console.log(response));
+function generateMODAL(data) {
+  console.log(data); // Array of 12 objects
+  console.log(data[0]); // sometimes logs the first object, other times says undefined
+  //console.log(data[0].gender); // mysteriously does not work
+
   //console.log(data.length);
   //for (let i = 0; i < data.length; i++) {
   let html = `
@@ -56,7 +59,7 @@ function generateMODAL() {
       <div class="modal-info-container">
           <img class="modal-img" src="https://placehold.it/125x125" alt="profile picture">
           <h3 id="name" class="modal-name cap">name</h3>
-          <p class="modal-text">email</p>
+          <p class="modal-text">${data[0].email}</p>
           <p class="modal-text cap">city</p>
           <hr>
           <p class="modal-text">(555) 555-5555</p>
@@ -66,7 +69,7 @@ function generateMODAL() {
   </div>
   `;
   //}
-  return html;
+  //return html;
 }
 
 function toggleMODAL() {
