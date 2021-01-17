@@ -44,8 +44,9 @@ function generateHTML(data) {
 }
 
 function generateMODAL() {
-  const data = fetchData("https://randomuser.me/api/");
+  const data = fetchData("https://randomuser.me/api/?results=12");
   console.log(data);
+  data.then(response => console.log(response));
   //console.log(data.length);
   //for (let i = 0; i < data.length; i++) {
   let html = `
