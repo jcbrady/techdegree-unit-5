@@ -3,6 +3,10 @@
 // Main API call to randomuser.me
 // futureproof updates to the API by adding a version number at the end
 //fetchData("https://randomuser.me/api/1.3/")
+
+// --------------------------------------
+// FETCH FUNCTIONS
+// --------------------------------------
 fetchData("https://randomuser.me/api/?results=12");
 // using fetchData as a reusable function to get results from the server
 function fetchData(url) {
@@ -14,9 +18,14 @@ function fetchData(url) {
     })
     .catch(error => console.log("Looks like there was a problem", error));
 }
+// --------------------------------------
+// HELPER FUNCTIONS
+// --------------------------------------
 
 // Generate HTML for 12 Cards
+// --------------------------------------
 function generateHTML(data) {
+  console.log(data);
   //console.log(data[0].name) //test data results
 
   const gallery = document.getElementById("gallery");
@@ -37,14 +46,17 @@ function generateHTML(data) {
 
     gallery.insertAdjacentHTML("beforeend", html);
 
-    // Get the HTML elements for the Modal window and listen for clicks
+    // ADD "click" EVENTLISTENER
+    // Callback function to toggleMODAL on and off
     const card = document.querySelectorAll(".card")[i];
     card.addEventListener("click", toggleMODAL);
   } // end loop
-  //generate the modal html
+  // Call Function to generate MODAL html
   generateMODAL(data);
 }
 
+// Generate HTML for MODAL
+// --------------------------------------
 function generateMODAL(data) {
   console.log(data); // Array of 12 objects
   console.log(data[0]); // sometimes logs the first object, other times says undefined
@@ -72,6 +84,8 @@ function generateMODAL(data) {
   //return html;
 }
 
+// Toggle MODAL on and off
+// --------------------------------------
 function toggleMODAL() {
   const modalSelector = document.querySelector("body");
   const modalHTML = generateMODAL();
@@ -84,11 +98,3 @@ function toggleMODAL() {
   });
   generateMODAL();
 }
-
-/**
- * element.insertAdjacentHTML('beforeend', 'HTML string')
- * That technique will allow you to add strings of HTML to the DOM without disrupting
- * what already exists in the DOM.
- */
-
-//generateHTML()
