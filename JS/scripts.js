@@ -4,15 +4,14 @@
 // futureproof updates to the API by adding a version number at the end
 //fetchData("https://randomuser.me/api/1.3/")
 fetchData("https://randomuser.me/api/?results=12");
-
+// using fetchData as a reusable function to get results from the server
 function fetchData(url) {
   return fetch(url)
-    .then(response => response.json()) // returns a promise
+    .then(response => response.json()) // returns a promise and parses it to JSON
     .then(data => {
-      generateHTML(data.results);
-      generateMODAL(data.results);
-    }) // calls functions with the data results
-
+      generateHTML(data.results); // calls function with the data results
+      // generateMODAL(data.results);
+    })
     .catch(error => console.log("Looks like there was a problem", error));
 }
 
@@ -44,7 +43,8 @@ function generateHTML(data) {
   } // end loop
 }
 
-function generateMODAL(data) {
+function generateMODAL() {
+  const data = fetchData("https://randomuser.me/api/");
   console.log(data);
   //console.log(data.length);
   //for (let i = 0; i < data.length; i++) {
@@ -78,6 +78,7 @@ function toggleMODAL() {
     console.log("clicked modal close");
     console.log(e.target);
   });
+  generateMODAL();
 }
 
 /**
