@@ -260,6 +260,10 @@ header h1 {
 
   .card:hover .card-img {
     border: 1px solid rgba(25, 25, 25, 0.06);
+    transform: scale(1.04);
+  }
+  .card:hover .card-name {
+    transform: scale(1.02);
   }
 
   .btn:hover {
