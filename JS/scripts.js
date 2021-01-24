@@ -7,8 +7,11 @@
 // --------------------------------------
 // FETCH FUNCTIONS
 // --------------------------------------
+
+// Get "12 data results" specified in the url
 fetchData("https://randomuser.me/api/?results=12");
-// using fetchData as a reusable function to get results from the server
+
+// using fetchData as a reusable function to fetch() results from the server
 function fetchData(url) {
   return fetch(url)
     .then(response => response.json()) // returns a promise and parses it to JSON
@@ -26,10 +29,8 @@ function fetchData(url) {
 // --------------------------------------
 function generateHTML(data) {
   console.log(data);
-  //console.log(data[0].name) //test data results
-
+  //console.log(data[0].name); //test data results
   const gallery = document.getElementById("gallery");
-  //const employeeCard = document.createElement("div");
 
   // loop through the data set, 12 results
   for (let i = 0; i < data.length; i++) {
@@ -48,21 +49,29 @@ function generateHTML(data) {
 
     // ADD "click" EVENTLISTENER
     // Callback function to toggleMODAL on and off
-    const card = document.querySelectorAll(".card")[i];
-    card.addEventListener("click", toggleMODAL);
+    //// const card = document.querySelectorAll(".card")[i];
+    //// card.addEventListener("click", toggleMODAL);
   } // end loop
+  const card = document.querySelectorAll(".card");
+  console.log(card);
+  card.forEach(item => {
+    console.log(item);
+    // I'm not sure how to add a parameter (such as data) to a callback function in this event listener:
+    item.addEventListener("click", generateMODAL);
+  });
+  //card.addEventListener("click", toggleMODAL);
   // Call Function to generate MODAL html
-  generateMODAL(data);
+  //generateMODAL(data);
 }
 
 // Generate HTML for MODAL
 // --------------------------------------
 function generateMODAL(data) {
-  console.log(data); // Array of 12 objects
-  console.log(data[0]); // sometimes logs the first object, other times says undefined
+  //console.log(data); // Array of 12 objects
+  // console.log(data[0]); // sometimes logs the first object, other times says undefined
   //console.log(data[0].gender); // mysteriously does not work
-
   //console.log(data.length);
+
   //for (let i = 0; i < data.length; i++) {
   let html = `
   <div class="modal-container">
@@ -71,7 +80,7 @@ function generateMODAL(data) {
       <div class="modal-info-container">
           <img class="modal-img" src="https://placehold.it/125x125" alt="profile picture">
           <h3 id="name" class="modal-name cap">name</h3>
-          <p class="modal-text">${data[0].email}</p>
+          <p class="modal-text">email</p>
           <p class="modal-text cap">city</p>
           <hr>
           <p class="modal-text">(555) 555-5555</p>
@@ -81,20 +90,29 @@ function generateMODAL(data) {
   </div>
   `;
   //}
-  //return html;
-}
 
-// Toggle MODAL on and off
-// --------------------------------------
-function toggleMODAL() {
-  const modalSelector = document.querySelector("body");
-  const modalHTML = generateMODAL();
-  modalSelector.insertAdjacentHTML("beforeend", modalHTML);
-  const close = document.getElementById("modal-close-btn");
-  // console.log(close);
-  close.addEventListener("click", function (e) {
-    console.log("clicked modal close");
+  // Select and insert Modal Window
+  const body = document.querySelector("body");
+  body.insertAdjacentHTML("afterEnd", html);
+
+  // Close Modal Window
+  const modalCloseBtn = document.getElementById("modal-close-btn");
+  const modalContainer = document.querySelector(".modal-container");
+  const modalContent = document.querySelector(".modal-info-container");
+  const modalImg = document.querySelector(".modal-img"); // bug fix -
+
+  modalCloseBtn.addEventListener("click", e => {
+    modalContainer.style.display = "none";
     console.log(e.target);
   });
-  generateMODAL();
+
+  // Functionality to close Modal window if user clicks background
+  // bug fix - added modalImg to conditional, so Modal doesn't close when profile image is clicked
+  modalContainer.addEventListener("click", e => {
+    if (e.target !== modalContent && e.target !== modalImg) {
+      modalContainer.style.display = "none";
+    }
+  });
+
+  //return html;
 }
