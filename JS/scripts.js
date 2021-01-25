@@ -77,7 +77,11 @@ function generateModal(data) {
   console.log(data[0]);
   console.log(data[0].gender);
   console.log(data.length);
+
   let html;
+  const card = document.getElementsByClassName(".card");
+  console.log(card); // nodelist if querySelector / htmlcollection if getElementsByclassName
+  //card.addEventListener("click", function () {
   for (let i = 0; i < data.length; i++) {
     html = `
   <div class="modal-container">
@@ -95,7 +99,9 @@ function generateModal(data) {
       </div>
   </div>
   `;
+    //return html;
   }
+  //});
 
   // Select and insert Modal Window
   const body = document.querySelector("body");
