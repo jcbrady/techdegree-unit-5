@@ -100,10 +100,11 @@ function generateModalConstants(data) {
 
 function updateModal(employeeObj) {
   const modalInfo = document.querySelector(".modal-info-container");
-  console.log(modalInfo);
+  console.log(modalInfo); // Wouldn't this be in the document? Why is this null?
   // dynamic data for modal here
 } // end updateModal() function
 updateModal();
+
 /**
 //// Modal markup for dynamic data areas - insert after <button>
 `<div class="modal-info-container">
