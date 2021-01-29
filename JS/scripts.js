@@ -22,12 +22,12 @@ function fetchData(url) {
     .catch(error => console.log("Looks like there was a problem", error));
 }
 
-function test() {
-  fetch("https://randomuser.me/api/?results=12").then(data => {
-    console.log(data);
-    updateModal(data);
-  });
-}
+// function test() {
+//   fetch("https://randomuser.me/api/?results=12").then(data => {
+//     console.log(data);
+//     updateModal(data);
+//   });
+// }
 
 // --------------------------------------
 // HELPER FUNCTIONS
@@ -36,7 +36,7 @@ function test() {
 // Generate HTML for 12 Cards
 // --------------------------------------
 function generateCards(data) {
-  console.log(data);
+  //console.log(data);
   //console.log(data[0].name); //test data results
   const gallery = document.getElementById("gallery");
 
@@ -57,49 +57,36 @@ function generateCards(data) {
   } // end loop
 
   const card = document.querySelectorAll(".card");
-  //console.log(card);
+
+  // Listen for clicks on each card
+  // Create the static modal window
   card.forEach(item => {
-    // call generateModalConstants as a callback
     item.addEventListener("click", function (e) {
-      console.log(e);
-      generateModalConstants(data);
+      const clickTarget = e.target;
+      generateModalConstants();
+      updateModal(data, clickTarget);
     });
   });
 } // end generateCards() function
 
-// Generate static HTML for Modal window - with the required number of data objects???
+// Generate static HTML and insert for Modal window
+// Close modal window
 // --------------------------------------
-function generateModalConstants(data) {
-  console.log(data); // Array of 12 objects
-  console.log(data[0]);
-  // console.log(data[0].gender);
-  // console.log(data.length);
-
-  let html;
-  //const card = document.getElementsByClassName(".card");
-  // console.log(card); // nodelist if querySelector / htmlcollection if getElementsByclassName
-  //card.addEventListener("click", function () {
-
-  html = `
+function generateModalConstants() {
+  const html = `
   <div class="modal-container">
   <div class="modal">
       <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
       <div class="modal-info-container">
-          <img class="modal-img" src="https://placehold.it/125x125" alt="profile picture">
-          <h3 id="name" class="modal-name cap">name</h3>
-          <p class="modal-text">${data[0].email}</p>
-          <p class="modal-text cap">city</p>
-          <hr>
-          <p class="modal-text">(555) 555-5555</p>
-          <p class="modal-text">123 Portland Ave., Portland, OR 97204</p>
-          <p class="modal-text">Birthday: 10/21/2015</p>
-      </div>
-  </div>`;
-
-  const modalInfo = document.querySelector(".modal-info-container");
-  console.log(modalInfo);
-  //return html;
-  //});
+      <img class="modal-img" src="https://placehold.it/125x125" alt="profile picture">
+      <h3 id="name" class="modal-name cap">name</h3>
+      <p class="modal-text">email</p>
+      <p class="modal-text cap">city</p>
+      <hr>
+      <p class="modal-text">(555) 555-5555</p>
+      <p class="modal-text">123 Portland Ave., Portland, OR 97204</p>
+      <p class="modal-text">Birthday: 10/21/2015</p>
+    </div>`;
 
   // Select and insert Modal Window
   const body = document.querySelector("body");
@@ -115,9 +102,13 @@ function generateModalConstants(data) {
 } // end generateModalConstants() function
 
 //
-function updateModal(employeeObject) {
+function updateModal(employeeObject, clickTarget) {
+  console.log(employeeObject);
+  console.log(clickTarget);
+  //if (clickTarget) {
+  // code here: clickTarget = name
+  //}
   const modalInfo = document.querySelector(".modal-info-container");
   console.log(modalInfo);
-  console.log(employeeObject);
+  //console.log(html);
 } // end updateModal() function
-updateModal();
