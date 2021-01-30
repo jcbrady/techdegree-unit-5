@@ -1,14 +1,10 @@
 // Treehouse techdegree: Unit-5 "Working with API's"
 
-// Main API call to randomuser.me
-// futureproof updates to the API by adding a version number at the end
-//fetchData("https://randomuser.me/api/1.3/")
-
 // --------------------------------------
 // FETCH FUNCTIONS
 // --------------------------------------
 
-// Get "12 data results" specified in the url
+// Get "12 data results" specified in the url from randomuser.me
 fetchData("https://randomuser.me/api/?results=12");
 
 // using fetchData as a reusable function to fetch() results from the server
@@ -21,13 +17,6 @@ function fetchData(url) {
     })
     .catch(error => console.log("Looks like there was a problem", error));
 }
-
-// function test() {
-//   fetch("https://randomuser.me/api/?results=12").then(data => {
-//     console.log(data);
-//     updateModal(data);
-//   });
-// }
 
 // --------------------------------------
 // HELPER FUNCTIONS
@@ -96,17 +85,14 @@ function generateModalConstants() {
     modalContainer.style.display = "none";
   });
   //}
-} // end generateModalConstants() function
+} // end generateModalConstants()
 
 //
 function updateModal(employeeObject, cardItem = 0) {
-  //console.log(employeeObject);
   const modalInfo = document.querySelector(".modal-info-container");
-  // Hide the modal on load
-
-  //console.log(modalInfo);
+  // Reset the modal content after .modal-info-container
   modalInfo.innerHTML = "";
-  //
+  // Update the content with current fetched data, using cardItem parameter
   let updateHTML = `
     <img class="modal-img" src="${employeeObject[cardItem].picture.large}" alt="profile picture">
     <h3 id="name" class="modal-name cap">${employeeObject[cardItem].name.title} ${employeeObject[cardItem].name.first} ${employeeObject[cardItem].name.last}</h3>
@@ -119,20 +105,18 @@ function updateModal(employeeObject, cardItem = 0) {
     <p class="modal-text">Birthday: ${employeeObject[cardItem].dob.date}</p>`;
 
   modalInfo.insertAdjacentHTML("afterBegin", updateHTML);
-} // end updateModal() function
+} // end updateModal()
 
 // Listen for clicks on each card, launch the modal window with current info.
+// Pass the current loop iteration to updateModal
 function cardClicks(resultsArr) {
   const modalContainer = document.querySelector(".modal-container");
   modalContainer.style.display = "none";
   const card = document.querySelectorAll(".card");
   for (let i = 0; i < resultsArr.length; i++) {
     card[i].addEventListener("click", function (e) {
-      console.log(card[i]);
-      console.log(e.target.parentElement);
       generateModalConstants();
       updateModal(resultsArr, i);
     });
   }
-  console.log(resultsArr);
-}
+} // end cardClicks()

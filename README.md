@@ -10,3 +10,6 @@ Additional Features to CSS
 
 Consider Additional Features to JavaScript
 • I want to add functionality to close modal window if user clicks the background, but this goal is sidetracking me right now. Will come back ot it
+
+API notes from randomuser.me
+You can futureproof updates to the API by adding a version number at the end such as: fetchData("https://randomuser.me/api/1.3/")
