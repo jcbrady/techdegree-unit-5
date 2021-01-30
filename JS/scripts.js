@@ -36,8 +36,6 @@ function fetchData(url) {
 // Generate HTML for 12 Cards
 // --------------------------------------
 function generateCards(data) {
-  //console.log(data);
-  //console.log(data[0].name); //test data results
   const gallery = document.getElementById("gallery");
 
   // loop through the data set, 12 results
@@ -56,13 +54,12 @@ function generateCards(data) {
     gallery.insertAdjacentHTML("beforeend", html);
   } // end loop
 
-  const card = document.querySelectorAll(".card");
-
-  // Listen for clicks on each card
-  // Create the static modal window
-
+  // Call functions to create the static modal window
+  // Call function to for click handler on cards
+  // --------------------------------------
   generateModalConstants();
   updateModal(data);
+  cardClicks(data);
 } // end generateCards() function
 
 // Generate static HTML and insert for Modal window
@@ -89,20 +86,24 @@ function generateModalConstants() {
   const body = document.querySelector("body");
   body.insertAdjacentHTML("afterEnd", html);
 
-  // Close Modal Window
+  // Toggle Modal Window
   const modalCloseBtn = document.getElementById("modal-close-btn");
   const modalContainer = document.querySelector(".modal-container");
+  //modalContainer.style.display = "none";
 
+  // if (modalContainer.style.display === "none") {
   modalCloseBtn.addEventListener("click", e => {
     modalContainer.style.display = "none";
   });
+  //}
 } // end generateModalConstants() function
 
 //
-function updateModal(employeeObject) {
-  let cardItem = 0;
-  console.log(employeeObject);
+function updateModal(employeeObject, cardItem = 0) {
+  //console.log(employeeObject);
   const modalInfo = document.querySelector(".modal-info-container");
+  // Hide the modal on load
+
   //console.log(modalInfo);
   modalInfo.innerHTML = "";
   //
@@ -120,6 +121,18 @@ function updateModal(employeeObject) {
   modalInfo.insertAdjacentHTML("afterBegin", updateHTML);
 } // end updateModal() function
 
+// Listen for clicks on each card, launch the modal window with current info.
 function cardClicks(resultsArr) {
+  const modalContainer = document.querySelector(".modal-container");
+  modalContainer.style.display = "none";
+  const card = document.querySelectorAll(".card");
+  for (let i = 0; i < resultsArr.length; i++) {
+    card[i].addEventListener("click", function (e) {
+      console.log(card[i]);
+      console.log(e.target.parentElement);
+      generateModalConstants();
+      updateModal(resultsArr, i);
+    });
+  }
   console.log(resultsArr);
 }
