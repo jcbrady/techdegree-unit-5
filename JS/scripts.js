@@ -60,13 +60,9 @@ function generateCards(data) {
 
   // Listen for clicks on each card
   // Create the static modal window
-  card.forEach(item => {
-    item.addEventListener("click", function (e) {
-      const clickTarget = e.target;
-      generateModalConstants();
-      updateModal(data, clickTarget);
-    });
-  });
+
+  generateModalConstants();
+  updateModal(data);
 } // end generateCards() function
 
 // Generate static HTML and insert for Modal window
@@ -78,15 +74,16 @@ function generateModalConstants() {
   <div class="modal">
       <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
       <div class="modal-info-container">
-      <img class="modal-img" src="https://placehold.it/125x125" alt="profile picture">
-      <h3 id="name" class="modal-name cap">name</h3>
-      <p class="modal-text">email</p>
-      <p class="modal-text cap">city</p>
-      <hr>
-      <p class="modal-text">(555) 555-5555</p>
-      <p class="modal-text">123 Portland Ave., Portland, OR 97204</p>
-      <p class="modal-text">Birthday: 10/21/2015</p>
-    </div>`;
+          <img class="modal-img" src="https://placehold.it/125x125" alt="profile picture">
+          <h3 id="name" class="modal-name cap">name</h3>
+          <p class="modal-text">email</p>
+          <p class="modal-text cap">city</p>
+          <hr>
+          <p class="modal-text">(555) 555-5555</p>
+          <p class="modal-text">123 Portland Ave., Portland, OR 97204</p>
+          <p class="modal-text">Birthday: 10/21/2015</p>
+      </div>
+  </div>`;
 
   // Select and insert Modal Window
   const body = document.querySelector("body");
@@ -102,13 +99,27 @@ function generateModalConstants() {
 } // end generateModalConstants() function
 
 //
-function updateModal(employeeObject, clickTarget) {
+function updateModal(employeeObject) {
+  let cardItem = 0;
   console.log(employeeObject);
-  console.log(clickTarget);
-  //if (clickTarget) {
-  // code here: clickTarget = name
-  //}
   const modalInfo = document.querySelector(".modal-info-container");
-  console.log(modalInfo);
-  //console.log(html);
+  //console.log(modalInfo);
+  modalInfo.innerHTML = "";
+  //
+  let updateHTML = `
+    <img class="modal-img" src="${employeeObject[cardItem].picture.large}" alt="profile picture">
+    <h3 id="name" class="modal-name cap">${employeeObject[cardItem].name.title} ${employeeObject[cardItem].name.first} ${employeeObject[cardItem].name.last}</h3>
+    <p class="modal-text">${employeeObject[cardItem].email}</p>
+    <p class="modal-text cap">${employeeObject[cardItem].location.country}</p>
+    <hr>
+    <p class="modal-text">Phone: ${employeeObject[cardItem].phone}</p>
+    <p class="modal-text"> ${employeeObject[cardItem].location.city}, 
+    ${employeeObject[cardItem].location.state} ${employeeObject[cardItem].location.postcode}</p>
+    <p class="modal-text">Birthday: ${employeeObject[cardItem].dob.date}</p>`;
+
+  modalInfo.insertAdjacentHTML("afterBegin", updateHTML);
 } // end updateModal() function
+
+function cardClicks(resultsArr) {
+  console.log(resultsArr);
+}
