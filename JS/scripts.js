@@ -13,7 +13,7 @@ function fetchData(url) {
     .then(response => response.json()) // returns a promise and parses it to JSON
     .then(data => {
       generateCards(data.results); // calls function with the data results
-      search(data.results);
+      searchBtn(data.results);
     })
     .catch(error => console.log("Looks like there was a problem", error));
 }
@@ -122,88 +122,42 @@ function cardClicks(resultsArr) {
 } // end cardClicks()
 
 //
+//
+//
 // --------------------------------------
 // EXTRA CREDIT
 // --------------------------------------
 
-// Search filter
-function search() {
+// Search filter - click button - from data results
+function searchBtn(data) {
   // add the search bar html to the page
   const search = document.querySelector(".search-container");
   const searchHTML = `
-  <form action="#" method="get">
-  <input type="search" id="search-input" class="search-input" placeholder="Search Names...">
-  <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
+ <form action="#" method="get">
+ <input type="search" id="search-input" class="search-input" placeholder="Search by First Name...">
+ <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
 </form>`;
   search.insertAdjacentHTML("afterBegin", searchHTML);
-
   // Search bar functionality
   let searchVal = document.getElementById("search-input");
   searchVal.focus();
-  // Search EventListener
-  searchVal.addEventListener("keyup", function () {
-    let searchInput = searchVal.value.toLowerCase();
+  // "click" EventListener on Search Submit Button
+  const submit = document.getElementById("search-submit");
+  submit.addEventListener("click", function () {
+    const input = searchVal.value.toLowerCase();
+    // Loop through data and compare search input
     let getName = document.querySelectorAll(".card-info-container #name");
-    // build a search string
-    // let count = 0;
-    // Loop through page results
-    for (let i = 0; i < getName.length; i++) {
-      let lowerCase = getName[i].innerHTML.toLowerCase();
-      // if search is not empty, show results. Otherwise show normal results
-      // Search logic: if search character matches the name character in the card
-      console.log("i outside of search is ... ");
-      console.log(i);
-      // getName[i].parentElement.parentElement.style.display = "none";
-      //
 
-      //console.log("count outside of conditional is:");
-      //console.log(count);
-      if (searchInput !== "") {
-        // search logic
-        if (searchInput.charAt(0) === lowerCase.charAt(0)) {
-          console.log("i inside of search is ... ");
-          console.log(i);
-          // console.log(searchInput.charAt(i)); // often this is blank
-          // console.log(lowerCase.charAt(i));
-          // console.log(searchInput.charAt(i) + " equals " + lowerCase.charAt(i));
-          // console.log("count inside of loop is:");
-          // console.log(count);
-          // count += 1; //count = count + 1;
-          // console.log("count inside of loop after increment is:");
-          // console.log(count);
-          //getName[i].parentElement.parentElement.style.display = "";
-          //searchInput = ""; // reset input to empty from the loops point of view and stop looping
-          // break;
-          // if search caracter is empty, stop comparing the results
-          // if the loop didn't break out, it would continue through all the characters in the name
-        } //else if (searchInput.charAt(i) === " ") {
-        // searchInput = ""; // Reset the search within the loop? Does it work?
-        //i = 0;
-        // break;
-        //getName[i].parentElement.parentElement.style.display = "none";
-        // }
-        else {
-          getName[i].parentElement.parentElement.style.display = "none";
-          //console.log(searchInput.charAt(i) + " else ... " + lowerCase.charAt(i));
-        } // end search logic (nested if statement)
-      } else {
-        // exit first if statement when search is empty and show normal results
+    for (let i = 0; i < data.length; i++) {
+      let name = data[i].name.first;
+      name = name.toLowerCase();
+      if (input === name) {
         getName[i].parentElement.parentElement.style.display = "";
+      } else if (input === "") {
+        getName[i].parentElement.parentElement.style.display = "";
+      } else {
+        getName[i].parentElement.parentElement.style.display = "none";
       }
-      //
-    } // end keyup eventListener
-
-    //console.log(dataString.split('');
-    //console.log(data[0].name.first.toLowerCase());
-    // Pseudo code: if search.value == data.name, show card
-    // else hide cards (if they don't contain the search value)
-
-    // if (searchInput.split("") === dataString.split("")) {
-    //   const card = document.querySelectorAll(".card");
-    //   card[0].style.display = "none";
-
-    //   console.log("-------");
-    //   console.log("Match!");
-    // }
-  }); // end keyup eventListener
-}
+    } // end loop
+  }); // end "click" Eventlistener on submit button
+} // end searchBtn Function

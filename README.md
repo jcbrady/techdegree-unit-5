@@ -8,8 +8,5 @@ Additional Features to CSS
 • Added background image to page for a textured effect
 • Centered modal content to match mockup
 
-Consider Additional Features to JavaScript
-• I want to add functionality to close modal window if user clicks the background, but this goal is sidetracking me right now. Will come back ot it
-
-API notes from randomuser.me
-You can futureproof updates to the API by adding a version number at the end such as: fetchData("https://randomuser.me/api/1.3/")
+Additional Features to JavaScript
+• Search is basic but the core functionality is there. Search uses a data .json object from the fetch results. The user must enter first name and spell it correctly. Search is activatd when user clicks the search button or hits return. If search field is empty, all card results will be shown.
