@@ -145,7 +145,7 @@ function search() {
     let searchInput = searchVal.value.toLowerCase();
     let getName = document.querySelectorAll(".card-info-container #name");
     // build a search string
-    let count = 0;
+    // let count = 0;
     // Loop through page results
     for (let i = 0; i < getName.length; i++) {
       let lowerCase = getName[i].innerHTML.toLowerCase();
@@ -156,21 +156,21 @@ function search() {
       // getName[i].parentElement.parentElement.style.display = "none";
       //
 
-      console.log("count outside of conditional is:");
-      console.log(count);
+      //console.log("count outside of conditional is:");
+      //console.log(count);
       if (searchInput !== "") {
         // search logic
-        if (searchInput.charAt(count) === lowerCase.charAt(count)) {
+        if (searchInput.charAt(0) === lowerCase.charAt(0)) {
           console.log("i inside of search is ... ");
           console.log(i);
-          console.log(searchInput.charAt(i)); // often this is blank
-          console.log(lowerCase.charAt(i));
-          console.log(searchInput.charAt(i) + " equals " + lowerCase.charAt(i));
-          console.log("count inside of loop is:");
-          console.log(count);
-          count += 1; //count = count + 1;
-          console.log("count inside of loop after increment is:");
-          console.log(count);
+          // console.log(searchInput.charAt(i)); // often this is blank
+          // console.log(lowerCase.charAt(i));
+          // console.log(searchInput.charAt(i) + " equals " + lowerCase.charAt(i));
+          // console.log("count inside of loop is:");
+          // console.log(count);
+          // count += 1; //count = count + 1;
+          // console.log("count inside of loop after increment is:");
+          // console.log(count);
           //getName[i].parentElement.parentElement.style.display = "";
           //searchInput = ""; // reset input to empty from the loops point of view and stop looping
           // break;
