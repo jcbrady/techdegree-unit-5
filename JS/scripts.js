@@ -5,7 +5,7 @@
 // --------------------------------------
 
 // Get "12 data results" specified in the url from randomuser.me
-fetchData("https://randomuser.me/api/?results=12");
+fetchData("https://randomuser.me/api/?nat=us&results=12");
 
 // using fetchData as a reusable function to fetch() results from the server
 function fetchData(url) {
@@ -13,7 +13,7 @@ function fetchData(url) {
     .then(response => response.json()) // returns a promise and parses it to JSON
     .then(data => {
       generateCards(data.results); // calls function with the data results
-      // generateModalConstants(); // (calling this instead in generateCards() eventlistener)
+      search(data.results);
     })
     .catch(error => console.log("Looks like there was a problem", error));
 }
@@ -120,3 +120,71 @@ function cardClicks(resultsArr) {
     });
   }
 } // end cardClicks()
+
+//
+// --------------------------------------
+// EXTRA CREDIT
+// --------------------------------------
+
+// Search filter
+function search() {
+  // add the search bar html to the page
+  const search = document.querySelector(".search-container");
+  const searchHTML = `
+  <form action="#" method="get">
+  <input type="search" id="search-input" class="search-input" placeholder="Search Names...">
+  <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
+</form>`;
+  search.insertAdjacentHTML("afterBegin", searchHTML);
+
+  // Search bar functionality
+  let searchVal = document.getElementById("search-input");
+
+  searchVal.addEventListener("keyup", function () {
+    let searchInput = searchVal.value.toLowerCase();
+    //let dataString = data[0].name.first.toLowerCase();
+    //console.log(searchInput.split(""));
+    //console.log(dataString.split(""));
+    let getName = document.querySelectorAll(".card-info-container #name");
+    //console.log(getName);
+    //console.log(getName[0].innerHTML.toLowerCase());
+    //console.log(getName[0]);
+
+    //console.log(searchInput.charAt(0));
+    //if (searchInput.indexof(0) == )
+    for (let i = 0; i < getName.length; i++) {
+      let lowerCase = getName[i].innerHTML.toLowerCase();
+
+      // console.log(lowerCase.charAt(i));
+      //console.log(searchInput.charAt(i));
+      //
+      //console.log(searchInput.split("")[i]); // undefined the second loop iteration
+      //console.log(dataString.split("")[i]);
+      console.log(i);
+      if (searchInput.charAt(0) === lowerCase.charAt(0)) {
+        console.log(searchInput.charAt(i) + " Hello There. " + lowerCase.charAt(i));
+        //console.log(getName[i].parentElement.parentElement);
+        //getName[i].parentElement.parentElement.style.display = "block";
+      } else if (searchInput.charAt(i) === " ") {
+        break;
+        //getName[i].parentElement.parentElement.style.display = "none";
+      } else {
+        getName[i].parentElement.parentElement.style.display = "none";
+        //console.log(searchInput.charAt(i) + " else ... " + lowerCase.charAt(i));
+      }
+    }
+
+    //console.log(dataString.split('');
+    //console.log(data[0].name.first.toLowerCase());
+    // Pseudo code: if search.value == data.name, show card
+    // else hide cards (if they don't contain the search value)
+
+    // if (searchInput.split("") === dataString.split("")) {
+    //   const card = document.querySelectorAll(".card");
+    //   card[0].style.display = "none";
+
+    //   console.log("-------");
+    //   console.log("Match!");
+    // }
+  }); // end keyup eventListener
+}
