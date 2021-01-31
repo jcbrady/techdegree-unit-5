@@ -139,40 +139,59 @@ function search() {
 
   // Search bar functionality
   let searchVal = document.getElementById("search-input");
-
+  searchVal.focus();
+  // Search EventListener
   searchVal.addEventListener("keyup", function () {
     let searchInput = searchVal.value.toLowerCase();
-    //let dataString = data[0].name.first.toLowerCase();
-    //console.log(searchInput.split(""));
-    //console.log(dataString.split(""));
     let getName = document.querySelectorAll(".card-info-container #name");
-    //console.log(getName);
-    //console.log(getName[0].innerHTML.toLowerCase());
-    //console.log(getName[0]);
-
-    //console.log(searchInput.charAt(0));
-    //if (searchInput.indexof(0) == )
+    // build a search string
+    let count = 0;
+    // Loop through page results
     for (let i = 0; i < getName.length; i++) {
       let lowerCase = getName[i].innerHTML.toLowerCase();
-
-      // console.log(lowerCase.charAt(i));
-      //console.log(searchInput.charAt(i));
-      //
-      //console.log(searchInput.split("")[i]); // undefined the second loop iteration
-      //console.log(dataString.split("")[i]);
+      // if search is not empty, show results. Otherwise show normal results
+      // Search logic: if search character matches the name character in the card
+      console.log("i outside of search is ... ");
       console.log(i);
-      if (searchInput.charAt(0) === lowerCase.charAt(0)) {
-        console.log(searchInput.charAt(i) + " Hello There. " + lowerCase.charAt(i));
-        //console.log(getName[i].parentElement.parentElement);
-        //getName[i].parentElement.parentElement.style.display = "block";
-      } else if (searchInput.charAt(i) === " ") {
-        break;
+      // getName[i].parentElement.parentElement.style.display = "none";
+      //
+
+      console.log("count outside of conditional is:");
+      console.log(count);
+      if (searchInput !== "") {
+        // search logic
+        if (searchInput.charAt(count) === lowerCase.charAt(count)) {
+          console.log("i inside of search is ... ");
+          console.log(i);
+          console.log(searchInput.charAt(i)); // often this is blank
+          console.log(lowerCase.charAt(i));
+          console.log(searchInput.charAt(i) + " equals " + lowerCase.charAt(i));
+          console.log("count inside of loop is:");
+          console.log(count);
+          count += 1; //count = count + 1;
+          console.log("count inside of loop after increment is:");
+          console.log(count);
+          //getName[i].parentElement.parentElement.style.display = "";
+          //searchInput = ""; // reset input to empty from the loops point of view and stop looping
+          // break;
+          // if search caracter is empty, stop comparing the results
+          // if the loop didn't break out, it would continue through all the characters in the name
+        } //else if (searchInput.charAt(i) === " ") {
+        // searchInput = ""; // Reset the search within the loop? Does it work?
+        //i = 0;
+        // break;
         //getName[i].parentElement.parentElement.style.display = "none";
+        // }
+        else {
+          getName[i].parentElement.parentElement.style.display = "none";
+          //console.log(searchInput.charAt(i) + " else ... " + lowerCase.charAt(i));
+        } // end search logic (nested if statement)
       } else {
-        getName[i].parentElement.parentElement.style.display = "none";
-        //console.log(searchInput.charAt(i) + " else ... " + lowerCase.charAt(i));
+        // exit first if statement when search is empty and show normal results
+        getName[i].parentElement.parentElement.style.display = "";
       }
-    }
+      //
+    } // end keyup eventListener
 
     //console.log(dataString.split('');
     //console.log(data[0].name.first.toLowerCase());
