@@ -1,7 +1,7 @@
 // Treehouse techdegree: Unit-5 "Working with API's"
 
 // --------------------------------------
-// FETCH and API
+// FETCH and API requests
 // --------------------------------------
 
 // Get "12 data results" specified in the url from randomuser.me
@@ -22,6 +22,7 @@ function fetchData(url) {
 // MAIN FUNCTIONS
 // --------------------------------------
 
+//
 // generateCards(data) function
 // data paremeter is from the API fetch call
 // Generates HTML with data for 12 cards
@@ -47,6 +48,7 @@ function generateCards(data) {
 
   // Call functions to create the static modal window
   // Call function to update the modal window with dynamic data
+  // Call function for cards eventListener
   // --------------------------------------
   generateModalConstants();
   updateModal(data);
@@ -83,12 +85,9 @@ function generateModalConstants() {
   const body = document.querySelector("body");
   body.insertAdjacentHTML("afterEnd", html);
 
-  // Toggle Modal Window
+  // Close Modal Window
   const modalCloseBtn = document.getElementById("modal-close-btn");
   const modalContainer = document.querySelector(".modal-container");
-  //modalContainer.style.display = "none";
-
-  // if (modalContainer.style.display === "none") {
   modalCloseBtn.addEventListener("click", e => {
     modalContainer.style.display = "none";
   });
@@ -98,7 +97,7 @@ function generateModalConstants() {
 // updateModal() function
 // employeeObject parameter is the dynamic data object from fetch
 // cardItem parameter takes current index from the loop in cardClicks function
-// update the modal window with clicked information
+// updates the modal window with current information
 // --------------------------------------
 function updateModal(employeeObject, cardItem = 0) {
   //
@@ -107,7 +106,7 @@ function updateModal(employeeObject, cardItem = 0) {
   // previous / next button functionality
   // --------------------------------------
   // the prev and next event listeners increase and decrease the cardItem variable
-  // then call the function InsertCardInfo with the main modal also calls
+  // then call the InsertCardInfo function
   const prevBtn = document.getElementById("modal-prev");
   const nextBtn = document.getElementById("modal-next");
   prevBtn.addEventListener("click", function () {
@@ -129,13 +128,12 @@ function updateModal(employeeObject, cardItem = 0) {
     }
   });
   //
-  // Insert modal data
+  // Modal data from initial card click
   // ------------
   const modalInfo = document.querySelector(".modal-info-container");
   // Reset the modal content after .modal-info-container
   modalInfo.innerHTML = "";
-  // Update the content with current fetched data, using cardItem parameter
-  // function to insert info - also used for prev next functionalty
+  // InsertCardInfo() function creates and inserts html and interpolated data
   function InsertCardInfo() {
     let updateHTML = `
     <img class="modal-img" src="${employeeObject[cardItem].picture.large}" alt="profile picture">
@@ -154,10 +152,11 @@ function updateModal(employeeObject, cardItem = 0) {
   InsertCardInfo(cardItem);
 } // end updateModal()
 
+//
 // cardClicks() function
-// resultsArr is the dynamic data object
-// Listen for clicks on each card, launch the modal window with current info.
-// Pass the current in loop iteration to updateModal
+// resultsArr parameter is the dynamic data object from fetch
+// Listen for clicks on each card, launch the modal window with current info
+// Pass in the current loop iteration to updateModal function as a second parameter
 // --------------------------------------
 function cardClicks(resultsArr) {
   const modalContainer = document.querySelector(".modal-container");
@@ -178,8 +177,8 @@ function cardClicks(resultsArr) {
 // EXTRA CREDIT
 // Search functionality
 // --------------------------------------
-
-// Search filter - click button - from data results
+// searchBtn() filters search results when user clicks search-submit button
+// The data parameter is the dynamic data object from fetch
 function searchBtn(data) {
   // add the search bar html to the page
   const searchContainer = document.querySelector(".search-container");
@@ -196,7 +195,7 @@ function searchBtn(data) {
   const submit = document.getElementById("search-submit");
   submit.addEventListener("click", function () {
     const input = searchVal.value.toLowerCase();
-    // Loop through data and compare search input
+    // Loop through data and compare search input with data in data object
     let getName = document.querySelectorAll(".card-info-container #name");
 
     for (let i = 0; i < data.length; i++) {
