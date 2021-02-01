@@ -1,7 +1,7 @@
 // Treehouse techdegree: Unit-5 "Working with API's"
 
 // --------------------------------------
-// FETCH FUNCTIONS
+// FETCH and API
 // --------------------------------------
 
 // Get "12 data results" specified in the url from randomuser.me
@@ -19,10 +19,12 @@ function fetchData(url) {
 }
 
 // --------------------------------------
-// HELPER FUNCTIONS
+// MAIN FUNCTIONS
 // --------------------------------------
 
-// Generate HTML for 12 Cards
+// generateCards(data) function
+// data paremeter is from the API fetch call
+// Generates HTML with data for 12 cards
 // --------------------------------------
 function generateCards(data) {
   const gallery = document.getElementById("gallery");
@@ -44,13 +46,15 @@ function generateCards(data) {
   } // end loop
 
   // Call functions to create the static modal window
-  // Call function to for click handler on cards
+  // Call function to update the modal window with dynamic data
   // --------------------------------------
   generateModalConstants();
   updateModal(data);
   cardClicks(data);
 } // end generateCards() function
 
+//
+// generateModalConstants() funciton
 // Generate static HTML and insert for Modal window
 // Close modal window
 // --------------------------------------
@@ -69,6 +73,10 @@ function generateModalConstants() {
           <p class="modal-text">123 Portland Ave., Portland, OR 97204</p>
           <p class="modal-text">Birthday: 10/21/2015</p>
       </div>
+      <div class="modal-btn-container">
+      <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
+      <button type="button" id="modal-next" class="modal-next btn">Next</button>
+  </div>
   </div>`;
 
   // Select and insert Modal Window
@@ -84,16 +92,52 @@ function generateModalConstants() {
   modalCloseBtn.addEventListener("click", e => {
     modalContainer.style.display = "none";
   });
-  //}
 } // end generateModalConstants()
 
 //
+// updateModal() function
+// employeeObject parameter is the dynamic data object from fetch
+// cardItem parameter takes current index from the loop in cardClicks function
+// update the modal window with clicked information
+// --------------------------------------
 function updateModal(employeeObject, cardItem = 0) {
+  //
+  // --------------------------------------
+  // EXTRA CREDIT
+  // previous / next button functionality
+  // --------------------------------------
+  // the prev and next event listeners increase and decrease the cardItem variable
+  // then call the function InsertCardInfo with the main modal also calls
+  const prevBtn = document.getElementById("modal-prev");
+  const nextBtn = document.getElementById("modal-next");
+  prevBtn.addEventListener("click", function () {
+    if (cardItem < 1) {
+      cardItem = employeeObject.length - 1;
+    } else {
+      cardItem -= 1;
+      modalInfo.innerHTML = "";
+      InsertCardInfo(cardItem);
+    }
+  });
+  nextBtn.addEventListener("click", function () {
+    if (cardItem < employeeObject.length - 1) {
+      cardItem += 1;
+      modalInfo.innerHTML = "";
+      InsertCardInfo(cardItem);
+    } else {
+      cardItem = 0;
+    }
+  });
+  //
+  // Insert modal data
+  // ------------
   const modalInfo = document.querySelector(".modal-info-container");
   // Reset the modal content after .modal-info-container
   modalInfo.innerHTML = "";
   // Update the content with current fetched data, using cardItem parameter
-  let updateHTML = `
+  // function to insert info - also used for prev next functionalty
+  function InsertCardInfo() {
+    let updateHTML = `
     <img class="modal-img" src="${employeeObject[cardItem].picture.large}" alt="profile picture">
     <h3 id="name" class="modal-name cap">${employeeObject[cardItem].name.title} ${employeeObject[cardItem].name.first} ${employeeObject[cardItem].name.last}</h3>
     <p class="modal-text">${employeeObject[cardItem].email}</p>
@@ -104,40 +148,47 @@ function updateModal(employeeObject, cardItem = 0) {
     ${employeeObject[cardItem].location.state} ${employeeObject[cardItem].location.postcode}</p>
     <p class="modal-text">Birthday: ${employeeObject[cardItem].dob.date}</p>`;
 
-  modalInfo.insertAdjacentHTML("afterBegin", updateHTML);
+    modalInfo.insertAdjacentHTML("afterBegin", updateHTML);
+  }
+  // call InsertCardInfo funciton with cardItem as parameter
+  InsertCardInfo(cardItem);
 } // end updateModal()
 
+// cardClicks() function
+// resultsArr is the dynamic data object
 // Listen for clicks on each card, launch the modal window with current info.
-// Pass the current loop iteration to updateModal
+// Pass the current in loop iteration to updateModal
+// --------------------------------------
 function cardClicks(resultsArr) {
   const modalContainer = document.querySelector(".modal-container");
   modalContainer.style.display = "none";
   const card = document.querySelectorAll(".card");
   for (let i = 0; i < resultsArr.length; i++) {
-    card[i].addEventListener("click", function (e) {
+    card[i].addEventListener("click", function () {
       generateModalConstants();
       updateModal(resultsArr, i);
+      //console.log(i + " card clicked");
     });
   }
 } // end cardClicks()
 
 //
 //
-//
 // --------------------------------------
 // EXTRA CREDIT
+// Search functionality
 // --------------------------------------
 
 // Search filter - click button - from data results
 function searchBtn(data) {
   // add the search bar html to the page
-  const search = document.querySelector(".search-container");
+  const searchContainer = document.querySelector(".search-container");
   const searchHTML = `
  <form action="#" method="get">
  <input type="search" id="search-input" class="search-input" placeholder="Search by First Name...">
  <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
 </form>`;
-  search.insertAdjacentHTML("afterBegin", searchHTML);
+  searchContainer.insertAdjacentHTML("afterBegin", searchHTML);
   // Search bar functionality
   let searchVal = document.getElementById("search-input");
   searchVal.focus();
